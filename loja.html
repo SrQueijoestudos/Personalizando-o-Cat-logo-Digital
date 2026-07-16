@@ -1,230 +1,216 @@
-<!DOCTYPE html> <!-- Documento HTML5 -->
-<html lang="pt-BR"> <!-- Idioma português do Brasil -->
+<!DOCTYPE html>
+<html lang="pt-PT">
 <head>
-<meta charset="UTF-8"> <!-- Suporte a acentos -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo -->
-<title>LOJA DO FRITZ</title> <!-- Título da aba -->
-<!-- Fonte personalizada do Google Fonts -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOJA DO FRITZ</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
 <style>
-*{ /* Reset básico em todos os elementos */
-    margin:0; /* Zera margem */
-    padding:0; /* Zera padding */
-    box-sizing:border-box; /* Modelo de caixa previsível */
-    font-family:Arial, Helvetica, sans-serif; /* Fonte padrão */
+*{ 
+    margin: 0; 
+    padding:0; 
+    box-sizing:border-box; 
+    font-family:Arial, Helvetica, sans-serif; 
 }
 body{
-    background: linear-gradient(to bottom, #05ecec, blue); /* Fundo em degradê ciano→azul */
-    min-height: 100vh; /* Altura mínima da tela */
+    background: linear-gradient(to bottom, #05ecec, blue); 
+    min-height: 100vh; 
 }
 header{
-    background:#004c66; /* Azul escuro */
-    color:white; /* Texto branco */
-    text-align:center; /* Centraliza o texto */
-    padding:25px; /* Espaço interno */
+    background:#004c66; 
+    color:white; 
+    text-align:center; 
+    padding:25px; 
+    position: relative;
 }
 header h1{
-    font-family:'Orbitron', sans-serif; /* Fonte futurista */
-    font-size:55px; /* Tamanho grande */
-    letter-spacing:3px; /* Espaçamento entre letras */
-    color:#00e5ff; /* Ciano brilhante */
-    text-shadow:0 0 10px #00e5ff, 0 0 20px #008cff; /* Efeito neon */
+    font-family:'Orbitron', sans-serif; 
+    font-size:55px; 
+    letter-spacing:3px; 
+    color:#00e5ff; 
+    text-shadow:0 0 10px #00e5ff, 0 0 20px #008cff; 
 }
-header p{ font-size:18px; margin-top:10px; } /* Subtítulo */
-#produtos{ width:90%; max-width:1000px; margin:30px auto; } /* Área central de produtos */
-.card{ /* Card de cada produto */
+header p{ font-size:18px; margin-top:10px; } 
+#produtos{ width:90%; max-width:1000px; margin:30px auto; } 
+.card{ 
     background:white;
-    display:flex; /* Layout horizontal */
-    align-items:center; /* Centraliza verticalmente */
-    gap:20px; /* Espaço entre imagem e texto */
+    display:flex; 
+    align-items:center; 
+    gap:20px; 
     padding:20px;
     margin-bottom:20px;
     border-radius:15px;
     box-shadow:0 5px 15px rgba(0,0,0,0.2);
-    transition:0.3s; /* Suaviza o hover */
+    transition:0.3s; 
 }
-.card:hover{ transform:scale(1.02); } /* Cresce um pouco ao passar o mouse */
-.card img{ width:180px; height:180px; object-fit:cover; border-radius:10px; } /* Imagem do produto */
-.info{ flex:1; } /* Bloco de texto ocupa o restante */
-.info h2{ color:#004c66; margin-bottom:10px; } /* Nome do produto */
-.info p{ margin-bottom:10px; color:#333; } /* Descrição */
-.preco{ color:green; font-size:24px; font-weight:bold; } /* Preço em destaque */
+.card:hover{ transform:scale(1.02); } 
+.card img{ width:180px; height:180px; object-fit:cover; border-radius:10px; } 
+.info{ flex:1; } 
+.info h2{ color:#004c66; margin-bottom:10px; } 
+.info p{ margin-bottom:10px; color:#333; } 
+.preco{ color:green; font-size:24px; font-weight:bold; margin-bottom: 15px; } 
 button{
     background:#0077cc; color:white; border:none;
     padding:12px 25px; border-radius:8px; cursor:pointer;
     font-size:16px; transition:0.3s;
 }
-button:hover{ background:#004c99; } /* Escurece no hover */
-.card-avaliacao{ /* Caixa com o comentário do cliente */
+button:hover{ background:#004c99; } 
+.card-avaliacao{ 
     margin-top:20px; padding:15px;
     background:#f8f8f8; border-radius:12px;
-    border-left:5px solid gold; /* Barra dourada à esquerda */
+    border-left:5px solid gold; 
 }
-.perfil{ display:flex; align-items:center; gap:12px; margin-bottom:10px; } /* Linha do usuário */
+.perfil{ display:flex; align-items:center; gap:12px; margin-bottom:10px; } 
 .perfil img{
-    width:55px; height:55px; border-radius:50%; /* Foto redonda */
+    width:55px; height:55px; border-radius:50%; 
     object-fit:cover; border:2px solid #0077cc;
 }
-.perfil h4{ margin:0; color:#004c66; } /* Nome do avaliador */
-.estrelas{ color:#FFD700; font-size:22px; } /* Estrelas amarelas */
-.comentario{ color:#444; font-style:italic; } /* Comentário em itálico */
+.perfil h4{ margin:0; color:#004c66; } 
+.estrelas{ color:#FFD700; font-size:22px; } 
+.comentario{ color:#444; font-style:italic; } 
 footer{
     margin-top:40px; background:#004c66;
     color:white; text-align:center; padding:20px;
 }
-.sair{ /* Botão de sair no canto */
-    position:fixed; top:20px; right:20px;
+.sair{ 
+    position:absolute; top:20px; right:20px;
     background:#ef4444; color:white; border:none;
     padding:10px 18px; border-radius:8px; cursor:pointer;
-    font-weight:bold; width:auto;
+    font-weight:bold;
 }
 .sair:hover{ background:#dc2626; }
 </style>
 </head>
 <body>
-<button class="sair" onclick="sair()">🚪 Sair</button> <!-- Botão para voltar ao login -->
+
 <header>
-    <h1>🖥️ LOJA DO FRITZ</h1> <!-- Título da loja -->
-    <p>Os melhores eletrônicos com os melhores preços!</p> <!-- Slogan -->
+    <button class="sair" onclick="sair()">🚪 Sair</button>
+    <h1>🖥️ LOJA DO FRITZ</h1>
+    <p>Os melhores eletrónicos com os melhores preços!</p>
 </header>
-<div id="produtos"></div> <!-- Container onde os produtos serão inseridos via JS -->
+
+<div id="produtos"></div>
+
 <footer>
     © 2026 Loja do Fritz - Todos os direitos reservados.
 </footer>
+
 <script>
-/* ============================================================
-   PRODUTOS PADRÃO (aparecem só na PRIMEIRA vez que abre a loja).
-   Depois disso, tudo é lido do localStorage compartilhado com o admin.
-   ============================================================ */
-let produtosPadrao = [ /* Lista inicial de produtos */
-{
-    nome:"Notebomba", /* Nome do produto */
-    preco:5499.90, /* Preço em reais */
-    descricao:"Notebomba ótimo para usar de peso para porta.",
-    imagem:"https://fastshopbr.vtexassets.com/arquivos/ids/4690488/17774671305318.jpg?v=639130677720670000",
-    usuario:"Tomas Turbando", /* Nome do avaliador */
-    fotoPerfil:"https://i.pinimg.com/236x/9f/1c/f1/9f1cf11f2e0749791b8cd24f4fee6937.jpg",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐⭐", /* Estrelinhas */
-    avaliacao:"Ótimo para segurar a porta, recomendo."
-},
-{
-    nome:"Motobunda",
-    preco:2499.90,
-    descricao:"Tela quebrada, usando um plástico de visor e bateria de longa duração(saiu da tomada paga).",
-    imagem:"https://http2.mlstatic.com/D_Q_NP_983786-MLA99479656582_112025-O.webp",
-    usuario:"Tomé Enstruando",
-    fotoPerfil:"https://i.pinimg.com/200x150/05/af/15/05af15ff9dcc9723c835d7ff1bdc6805.jpg",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐",
-    avaliacao:"Excelente celular para tacar no meu filho, duro igual uma pedra e esquenta igual lava, recomendo."
-},
-{
-    nome:"Headcut",
-    preco:399.90,
-    descricao:"Som estourado, com lâminas em formatos estranhos.",
-    imagem:"https://m.media-amazon.com/images/I/61pvhJpLRRL._AC_UF894,1000_QL80_.jpg",
-    usuario:"Paulu Brificado",
-    fotoPerfil:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnd7voxN1SF8DEH5Rp61VviBSP2U9QmJUEMecQQwUv6w&s=10",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐⭐",
-    avaliacao:"Muito desconfortável e o áudio é horrívelmente bom para lubrificar"
-},
-{
-    nome:"Monitorta",
-    preco:1499.90,
-    descricao:"Monitor de responsa, é torto a 90°(partiu no meio), gerando uma visão previlegiada.",
-    imagem:"https://files.tecnoblog.net/wp-content/uploads/2023/07/lg-monitor-ultragear-curvo-1060x704.webp",
-    usuario:"Tommy Leite",
-    fotoPerfil:"https://i.pinimg.com/236x/bb/e7/7c/bbe77cfaab0951e2f783993fedc191b4.jpg",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐⭐",
-    avaliacao:"Perfeito para ver COISAS em ultra HD"
-}
-]; /* Fim da lista padrão */
-/* CHAVE única do localStorage — os DOIS arquivos (loja e admin) usam a MESMA
-   string. Isso é o que faz o admin e o cliente ficarem "em sintonia". */
 const CHAVE = "produtosLoja";
-/* Se ainda não existir nada salvo, gravamos a lista padrão.
-   Assim, a primeira visita já mostra produtos e o admin também os vê. */
-if(localStorage.getItem(CHAVE) === null){ /* Verifica se nunca foi salvo */
-    localStorage.setItem(CHAVE, JSON.stringify(produtosPadrao)); /* Grava padrão */
+
+let produtosPadrao = [
+    {
+        nome: "Notebomba",
+        preco: 5499.90,
+        descricao: "Notebomba ótimo para usar de peso para porta.",
+        imagem: "https://fastshopbr.vtexassets.com/arquivos/ids/4690488/17774671305318.jpg?v=639130677720670000",
+        usuario: "Tomas Turbando",
+        fotoPerfil: "https://i.pinimg.com/236x/9f/1c/f1/9f1cf11f2e0749791b8cd24f4fee6937.jpg",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐",
+        avaliacao: "Ótimo para segurar a porta, recomendo."
+    },
+    {
+        nome: "Motobunda",
+        preco: 2499.90,
+        descricao: "Tela quebrada, usando um plástico de visor e bateria de longa duração (saiu da tomada apaga).",
+        imagem: "https://http2.mlstatic.com/D_Q_NP_983786-MLA99479656582_112025-O.webp",
+        usuario: "Tomé Enstruando",
+        fotoPerfil: "https://i.pinimg.com/200x150/05/af/15/05af15ff9dcc9723c835d7ff1bdc6805.jpg",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐☆",
+        avaliacao: "Excelente celular para tacar no meu filho, duro igual uma pedra e esquenta igual lava."
+    },
+    {
+        nome: "Headcut funcional",
+        preco: 399.90,
+        descricao: "Som estourado, com lâminas em formatos estranhos.",
+        imagem: "https://m.media-amazon.com/images/I/61pvhJpLRRL._AC_UF894,1000_QL80_.jpg",
+        usuario: "Paulu Brificado",
+        fotoPerfil: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnd7voxN1SF8DEH5Rp61VviBSP2U9QmJUEMecQQwUv6w&s=10",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐",
+        avaliacao: "Muito desconfortável e o áudio é terrivelmente bom para lubrificar."
+    },
+    {
+        nome: "Monitorta",
+        preco: 1499.90,
+        descricao: "Monitor de responsa, é torto a 90° (partiu ao meio), gerando uma visão privilegiada.",
+        imagem: "https://files.tecnoblog.net/wp-content/uploads/2023/07/lg-monitor-ultragear-curvo-1060x704.webp",
+        usuario: "Tommy Leite",
+        fotoPerfil: "https://i.pinimg.com/236x/bb/e7/7c/bbe77cfaab0951e2f783993fedc191b4.jpg",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐",
+        avaliacao: "Perfeito para ver COISAS em ultra HD."
+    }
+];
+
+if (localStorage.getItem(CHAVE) === null) {
+    localStorage.setItem(CHAVE, JSON.stringify(produtosPadrao));
 }
-/* Função que LÊ os produtos do localStorage (fonte única da verdade). */
-function carregarProdutos(){
-    return JSON.parse(localStorage.getItem(CHAVE)) || []; /* Converte texto→array */
+
+function carregarProdutos() {
+    return JSON.parse(localStorage.getItem(CHAVE)) || [];
 }
-function comprar(){ /* Simula a compra */
+
+function comprar() {
     alert("⚠️ ATENÇÃO: ESTOQUE ZERADO NO MOMENTO ⚠️ \n (Tomamos processo e fomos obrigados a parar de vender)");
 }
-function sair(){ /* Volta para a tela de login */
+
+function sair() {
     window.location.href = "login.html";
 }
-function listarProdutos(){ /* Renderiza todos os cards na tela */
-    let produtos = carregarProdutos(); /* Sempre pega a versão MAIS RECENTE */
-    let area = document.getElementById("produtos"); /* Container onde inserir */
-    area.innerHTML = ""; /* Limpa antes de redesenhar */
-    if(produtos.length === 0){ /* Se não há nenhum produto */
+
+function listarProdutos() {
+    let produtos = carregarProdutos();
+    let area = document.getElementById("produtos");
+    area.innerHTML = "";
+
+    if (produtos.length === 0) {
         area.innerHTML = "<p style='text-align:center;color:white;font-size:20px;padding:40px;'>Nenhum produto disponível no momento.</p>";
-        return; /* Sai */
+        return;
     }
-    for(let i = 0; i < produtos.length; i++){ /* Loop em cada produto */
-       let p = produtos[i]; /* Atalho para o produto atual */
-       /* Alguns campos podem não existir (produto adicionado pelo admin
-          só tem nome e preço). Por isso usamos "||" para valores padrão. */
-       let imagem = p.imagem || "https://via.placeholder.com/180?text=Sem+Imagem";
-       let descricao = p.descricao || "Produto adicionado pelo satánas(Tá amarrado).";
-       let usuario = p.usuario || "Cliente Anônimo";
-       let fotoPerfil = p.fotoPerfil || "https://via.placeholder.com/55";
-       let pontuacao = p.pontuacaoAvaliacao || "⭐⭐⭐⭐⭐";
-       let avaliacao = p.avaliacao || "Ainda sem avaliações.";
-       area.innerHTML += ` 
-<div class="card"> <!-- Card do produto -->
-    <img src="${imagem}" alt="${p.nome}"> <!-- Imagem -->
-    <div class="info">
-        <h2>${p.nome}</h2> <!-- Nome -->
-        <p>${descricao}</p> <!-- Descrição -->
-        <p class="preco">R$ ${Number(p.preco).toFixed(2).replace(".",",")}</p> <!-- Preço -->
-        <button onclick="comprar()">Comprar</button> <!-- Botão comprar -->
-        <div class="card-avaliacao">
-            <div class="perfil">
-                <img src="${fotoPerfil}">
-                <div>
-                    <h4>${usuario}</h4>
-                    <div class="estrelas">${pontuacao}</div>
+
+    for (let i = 0; i < produtos.length; i++) {
+        let p = produtos[i];
+        let imagem = p.imagem || "https://via.placeholder.com/180?text=Sem+Imagem";
+        let descricao = p.descricao || "Produto disponível para entrega imediata.";
+        let usuario = p.usuario || "Cliente Verificado";
+        let fotoPerfil = p.fotoPerfil || "https://via.placeholder.com/55";
+        let pontuacao = p.pontuacaoAvaliacao || "⭐⭐⭐⭐⭐";
+        let avaliacao = p.avaliacao || "Excelente produto, cumpre integralmente os requisitos de qualidade.";
+
+        area.innerHTML += `
+        <div class="card">
+            <img src="${imagem}" alt="${p.nome}">
+            <div class="info">
+                <h2>${p.nome}</h2>
+                <p>${descricao}</p>
+                <p class="preco">R$ ${Number(p.preco).toFixed(2).replace(".", ",")}</p>
+                <button onclick="comprar()">Comprar</button>
+
+                <div class="card-avaliacao">
+                    <div class="perfil">
+                        <img src="${fotoPerfil}">
+                        <div>
+                            <h4>${usuario}</h4>
+                            <div class="estrelas">${pontuacao}</div>
+                        </div>
+                    </div>
+                    <p class="comentario">"${avaliacao}"</p>
                 </div>
             </div>
-            <p class="comentario">"${avaliacao}"</p>
         </div>
-    </div>
-</div>`;
+        `;
     }
 }
-listarProdutos(); /* Chama assim que a página carrega */
-/* Escuta mudanças feitas em OUTRA aba (ex.: admin aberto em outra guia).
-   Sempre que o localStorage muda, redesenhamos a lista automaticamente. */
-window.addEventListener("storage", function(e){
-    if(e.key === CHAVE){ /* Só nos interessa a nossa chave */
-        listarProdutos(); /* Atualiza a tela */
+
+window.addEventListener("storage", function(e) {
+    if (e.key === CHAVE) {
+        listarProdutos();
     }
 });
 
-/* Carrega a lista atual do localStorage. Se ainda não existir, retorna array vazio. */
-let itens = JSON.parse(localStorage.getItem(CHAVE)) || [];
-/* Salva a lista atualizada de volta no localStorage. */
-function salvar(){
-    localStorage.setItem(CHAVE, JSON.stringify(itens)); /* Converte array→texto e grava */
-}
-
-/* Sai do painel e volta para a tela de login. */
-function sair(){
-    window.location.href = "login.html";
-}
-renderizar(); /* Chama ao abrir a página */
-/* Se algum outro admin (outra aba) alterar a lista, sincroniza aqui também. */
-window.addEventListener("storage", function(e){
-    if(e.key === CHAVE){ /* Só quando a chave certa mudar */
-        itens = JSON.parse(localStorage.getItem(CHAVE)) || []; /* Recarrega */
-        renderizar(); /* Redesenha */
-    }
-});
-
+listarProdutos();
 </script>
+
 </body>
 </html>

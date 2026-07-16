@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-PT">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loja do Flitz- Login</title>
+<title>Loja do Fritz - Login</title>
 <style>
 *{
     margin:0;
@@ -27,10 +27,21 @@ body{
     box-shadow:0 10px 25px rgba(0,0,0,.4);
     color:white;
 }
-h1{text-align:center;margin-bottom:10px;}
+h1{text-align:center;margin-bottom:10px;font-size:28px;}
 p{text-align:center;margin-bottom:20px;color:#ddd;}
 .menu{display:flex;gap:10px;margin-bottom:20px;}
-.menu button{flex:1;}
+.menu button{
+    flex:1;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.menu button:hover{
+    background: rgba(255,255,255,0.3);
+}
 input{
     width:100%;
     padding:12px;
@@ -39,7 +50,7 @@ input{
     border-radius:8px;
     font-size:16px;
 }
-button{
+button.action-btn{
     width:100%;
     padding:12px;
     border:none;
@@ -48,8 +59,9 @@ button{
     color:white;
     font-size:16px;
     cursor:pointer;
+    margin-top: 10px;
 }
-button:hover{background:#0090dd;}
+button.action-btn:hover{background:#0090dd;}
 #cadastro{display:none;}
 #msg{margin-top:15px;text-align:center;color:#ffb3b3;}
 </style>
@@ -57,7 +69,7 @@ button:hover{background:#0090dd;}
 <body>
 
 <div class="container">
-    <h1>🖥️ LOJA DO FLITZ</h1>
+    <h1>🖥️ LOJA DO FRITZ</h1>
     <p>Login do Sistema</p>
 
     <div class="menu">
@@ -66,15 +78,15 @@ button:hover{background:#0090dd;}
     </div>
 
     <div id="login">
-        <input type="text" id="usuario" placeholder="Usuário">
-        <input type="password" id="senha" placeholder="Senha">
-        <button onclick="login()">Entrar</button>
+        <input type="text" id="usuario" placeholder="Utilizador">
+        <input type="password" id="senha" placeholder="Palavra-passe">
+        <button class="action-btn" onclick="login()">Entrar</button>
     </div>
 
     <div id="cadastro">
-        <input type="text" id="novoUsuario" placeholder="Novo usuário">
-        <input type="password" id="novaSenha" placeholder="Nova senha">
-        <button onclick="cadastrar()">Cadastrar</button>
+        <input type="text" id="novoUsuario" placeholder="Novo utilizador">
+        <input type="password" id="novaSenha" placeholder="Nova palavra-passe">
+        <button class="action-btn" onclick="cadastrar()">Cadastrar</button>
     </div>
 
     <p id="msg"></p>
@@ -94,51 +106,52 @@ function mostrarCadastro(){
 }
 
 function cadastrar(){
-    let usuario=document.getElementById("novoUsuario").value;
-    let senha=document.getElementById("novaSenha").value;
+    let usuario = document.getElementById("novoUsuario").value.trim();
+    let senha = document.getElementById("novaSenha").value;
 
-    if(usuario=="" || senha==""){
+    if(usuario === "" || senha === ""){
         alert("Preencha todos os campos.");
         return;
     }
 
-    localStorage.setItem(usuario,senha);
+    localStorage.setItem("user_" + usuario, senha);
     alert("Cadastro realizado com sucesso!");
     mostrarLogin();
 }
 
 function login(){
-    let usuario=document.getElementById("usuario").value;
-    let senha=document.getElementById("senha").value;
+    let usuario = document.getElementById("usuario").value.trim();
+    let senha = document.getElementById("senha").value;
 
-    // Login do boneco de neve
-    if(usuario=="boneco de neve" && senha=="siu"){
-        alert("Login realizado com sucesso!");
-        window.location.href="https://instagram.fcfc1-1.fna.fbcdn.net/v/t51.71878-15/522662830_1675712729806817_2121207669676730783_n.jpg?stp=dst-jpg_e15_tt6&_nc_cat=111&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNMSVBTLnhwaWRzLjY0MC5zZHIudmlkZW9fYWRkaXRpb25hbF9jb3Zlcl9mcmFtZS5DMyJ9&_nc_ohc=vQjAMqhts4kQ7kNvwFw1Kho&_nc_oc=AdpzIfab2e4yZiLe38K070U3Ne06e_6gSWkmQbuF_YvQuUzA_ALVmw5wR1FyXt5asDQ&_nc_zt=23&_nc_ht=instagram.fcfc1-1.fna&_nc_gid=w96tpaxceR8-9i5Xh9Rk2A&_nc_ss=7b689&oh=00_AQD9A5igVjhDAhIs-dSm6iPYQClw9fursZ5yuLbVWNHARw&oe=6A5DA89C";
-        return;
-    }
-    // Login do admin
-    if(usuario=="Admin" && senha=="AdminProGamer"){
-        alert("Login realizado com sucesso!");
-        window.location.href="loja_adm.html";
+    // Login do boneco de neve (teste rápido)
+    if(usuario === "boneco de neve" && senha === "siu"){
+        alert("Login de Teste realizado!");
+        window.location.href = "loja.html";
         return;
     }
 
-    // Login de usuários cadastrados
-    let senhaSalva=localStorage.getItem(usuario);
-
-    if(senhaSalva===null){
-        document.getElementById("msg").innerHTML="Usuário não encontrado.";
+    // Login do administrador do sistema
+    if(usuario === "Admin" && senha === "adm123"){
+        alert("Login de Administrador realizado!");
+        window.location.href = "loja_adm.html";
         return;
     }
 
-    if(senha!==senhaSalva){
-        document.getElementById("msg").innerHTML="Senha incorreta.";
+    // Login de utilizadores registados
+    let senhaSalva = localStorage.getItem("user_" + usuario);
+
+    if(senhaSalva === null){
+        document.getElementById("msg").innerHTML = "Utilizador não encontrado.";
+        return;
+    }
+
+    if(senha !== senhaSalva){
+        document.getElementById("msg").innerHTML = "Palavra-passe incorreta.";
         return;
     }
 
     alert("Login realizado com sucesso!");
-    window.location.href="loja.html";
+    window.location.href = "loja.html";
 }
 </script>
 

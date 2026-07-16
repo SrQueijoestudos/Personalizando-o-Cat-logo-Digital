@@ -1,321 +1,409 @@
-<!DOCTYPE html> <!-- Documento HTML5 -->
-<html lang="pt-BR"> <!-- Idioma português do Brasil -->
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-<meta charset="UTF-8"> <!-- Suporte a acentos -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsivo -->
-<title>LOJA DO FRITZ</title> <!-- Título da aba -->
-<!-- Fonte personalizada do Google Fonts -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOJA DO FRITZ - Painel Admin</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
 <style>
-*{ /* Reset básico em todos os elementos */
-    margin:0; /* Zera margem */
-    padding:0; /* Zera padding */
-    box-sizing:border-box; /* Modelo de caixa previsível */
-    font-family:Arial, Helvetica, sans-serif; /* Fonte padrão */
+*{ 
+    margin:0; 
+    padding:0; 
+    box-sizing:border-box; 
+    font-family:Arial, Helvetica, sans-serif; 
 }
 body{
-    background: linear-gradient(to bottom, #05ecec, blue); /* Fundo em degradê ciano→azul */
-    min-height: 100vh; /* Altura mínima da tela */
+    background: linear-gradient(to bottom, #05ecec, blue); 
+    min-height: 100vh; 
 }
 header{
-    background:#004c66; /* Azul escuro */
-    color:white; /* Texto branco */
-    text-align:center; /* Centraliza o texto */
-    padding:25px; /* Espaço interno */
+    background:#004c66; 
+    color:white; 
+    text-align:center; 
+    padding:25px; 
+    position: relative;
 }
 header h1{
-    font-family:'Orbitron', sans-serif; /* Fonte futurista */
-    font-size:55px; /* Tamanho grande */
-    letter-spacing:3px; /* Espaçamento entre letras */
-    color:#00e5ff; /* Ciano brilhante */
-    text-shadow:0 0 10px #00e5ff, 0 0 20px #008cff; /* Efeito neon */
+    font-family:'Orbitron', sans-serif; 
+    font-size:42px; 
+    letter-spacing:2px; 
+    color:#00e5ff; 
+    text-shadow:0 0 10px #00e5ff, 0 0 20px #008cff; 
 }
-header p{ font-size:18px; margin-top:10px; } /* Subtítulo */
-#produtos{ width:90%; max-width:1000px; margin:30px auto; } /* Área central de produtos */
-.card{ /* Card de cada produto */
+header p{ font-size:18px; margin-top:5px; margin-bottom: 20px; }
+
+/* ESTILOS DO PAINEL DE CONTROLO DO ADMIN */
+.painel {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+.bloco {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 12px;
+}
+.bloco h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: #00e5ff;
+}
+.linha {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.linha input, .linha select {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+}
+.linha button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.btn-add { background: #10b981; color: white; border: none; }
+.btn-add:hover { background: #059669; }
+
+.btn-limpar { background: #6b7280; color: white; border: none; }
+.btn-limpar:hover { background: #4b5563; }
+
+.btn-restaurar { background: #f59e0b; color: white; border: none; }
+.btn-restaurar:hover { background: #d97706; }
+
+.btn-desfazer { background: #8b5cf6; color: white; border: none; }
+.btn-desfazer:hover { background: #7c3aed; }
+
+/* AREA DOS PRODUTOS */
+#produtos{ width:90%; max-width:1000px; margin:30px auto; } 
+.card{ 
     background:white;
-    display:flex; /* Layout horizontal */
-    align-items:center; /* Centraliza verticalmente */
-    gap:20px; /* Espaço entre imagem e texto */
+    display:flex; 
+    align-items:center; 
+    gap:20px; 
     padding:20px;
     margin-bottom:20px;
     border-radius:15px;
     box-shadow:0 5px 15px rgba(0,0,0,0.2);
-    transition:0.3s; /* Suaviza o hover */
+    transition:0.3s; 
+    position: relative;
 }
-.card:hover{ transform:scale(1.02); } /* Cresce um pouco ao passar o mouse */
-.card img{ width:180px; height:180px; object-fit:cover; border-radius:10px; } /* Imagem do produto */
-.info{ flex:1; } /* Bloco de texto ocupa o restante */
-.info h2{ color:#004c66; margin-bottom:10px; } /* Nome do produto */
-.info p{ margin-bottom:10px; color:#333; } /* Descrição */
-.preco{ color:green; font-size:24px; font-weight:bold; } /* Preço em destaque */
-button{
-    background:#0077cc; color:white; border:none;
-    padding:12px 25px; border-radius:8px; cursor:pointer;
-    font-size:16px; transition:0.3s;
+.card:hover{ transform:scale(1.01); } 
+.card img{ width:180px; height:180px; object-fit:cover; border-radius:10px; } 
+.info{ flex:1; } 
+.info h2{ color:#004c66; margin-bottom:10px; } 
+.info p{ margin-bottom:10px; color:#333; } 
+.preco{ color:green; font-size:24px; font-weight:bold; margin-bottom: 10px; } 
+
+.btn-excluir-card {
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
 }
-button:hover{ background:#004c99; } /* Escurece no hover */
-.card-avaliacao{ /* Caixa com o comentário do cliente */
-    margin-top:20px; padding:15px;
+.btn-excluir-card:hover { background: #dc2626; }
+
+.card-avaliacao{ 
+    margin-top:15px; padding:15px;
     background:#f8f8f8; border-radius:12px;
-    border-left:5px solid gold; /* Barra dourada à esquerda */
+    border-left:5px solid gold; 
 }
-.perfil{ display:flex; align-items:center; gap:12px; margin-bottom:10px; } /* Linha do usuário */
+.perfil{ display:flex; align-items:center; gap:12px; margin-bottom:10px; } 
 .perfil img{
-    width:55px; height:55px; border-radius:50%; /* Foto redonda */
+    width:55px; height:55px; border-radius:50%; 
     object-fit:cover; border:2px solid #0077cc;
 }
-.perfil h4{ margin:0; color:#004c66; } /* Nome do avaliador */
-.estrelas{ color:#FFD700; font-size:22px; } /* Estrelas amarelas */
-.comentario{ color:#444; font-style:italic; } /* Comentário em itálico */
+.perfil h4{ margin:0; color:#004c66; } 
+.estrelas{ color:#FFD700; font-size:22px; } 
+.comentario{ color:#444; font-style:italic; } 
+
 footer{
     margin-top:40px; background:#004c66;
     color:white; text-align:center; padding:20px;
 }
-.sair{ /* Botão de sair no canto */
-    position:fixed; top:20px; right:20px;
+.sair{ 
+    position:absolute; top:20px; right:20px;
     background:#ef4444; color:white; border:none;
     padding:10px 18px; border-radius:8px; cursor:pointer;
-    font-weight:bold; width:auto;
+    font-weight:bold;
 }
 .sair:hover{ background:#dc2626; }
 </style>
 </head>
 <body>
-<button class="sair" onclick="sair()">🚪 Sair</button> <!-- Botão para voltar ao login -->
+
 <header>
-    <h1>🖥️ LOJA DO FRITZ - Setor Admnistrativo</h1> <!-- Título da loja -->
-    <p>Os melhores eletrônicos com os melhores preços!</p> <!-- Slogan -->
-    <div class="painel"> <!-- Painel central -->
-    <div class="bloco"> <!-- Bloco: adicionar produto -->
-        <h2>➕ Adicionar item</h2>
-        <div class="linha">
-            <input type="text" id="nomeItem" placeholder="Nome do item"> <!-- Nome -->
-            <input type="number" id="precoItem" placeholder="Preço (R$)" step="0.01"> <!-- Preço -->
-            <input type="text" id="imagemItem" placeholder="URL da imagem (opcional)"> <!-- Imagem opcional -->
-            <input type="text" id="descricaoItem" placeholder="Descrição (opcional)"> <!-- Descrição opcional -->
-            <select> id ="pontuacaoAvaliacao"
-            <option value = ""> ⭐ </option>
-            <option value = ""> ⭐⭐ </option>
-            <option value = ""> ⭐⭐⭐</option>
-            <option value = ""> ⭐⭐⭐⭐ </option>
-            <option value = ""> ⭐⭐⭐⭐⭐ </option>
-            </select>
+    <button class="sair" onclick="sair()">🚪 Sair</button>
+    <h1>🖥️ LOJA DO FRITZ - Setor Administrativo</h1>
+    <p>Painel de Gestão e Controlo de Produtos</p>
 
-            <button onclick="adicionarItem()">Adicionar</button> <!-- Botão adicionar -->
-        </div>
-    </div>
-    
-    <div class="bloco"> <!-- Bloco: buscar -->
-        <h2>🔍 Buscar item</h2>
-        <div class="linha">
-            <input type="text" id="buscaItem" placeholder="Digite o nome..." oninput="renderizar()"> <!-- Busca ao vivo -->
-            <button onclick="document.getElementById('buscaItem').value='';renderizar();">Limpar</button>
-        </div>
-    </div>
-    <div class="lista" id="lista"></div> <!-- Onde a lista é renderizada -->
-</div>
-</header>
-<div id="produtos"></div> <!-- Container onde os produtos serão inseridos via JS -->
-<footer>
-    © 2026 Loja do Fritz - Todos os direitos reservados.
-</footer>
-<script>
-/* ============================================================
-   PRODUTOS PADRÃO (aparecem só na PRIMEIRA vez que abre a loja).
-   Depois disso, tudo é lido do localStorage compartilhado com o admin.
-   ============================================================ */
-let produtosPadrao = [ /* Lista inicial de produtos */
-{
-    nome:"Notebomba", /* Nome do produto */
-    preco:5499.90, /* Preço em reais */
-    descricao:"Notebomba ótimo para usar de peso para porta.",
-    imagem:"https://fastshopbr.vtexassets.com/arquivos/ids/4690488/17774671305318.jpg?v=639130677720670000",
-    usuario:"Tomas Turbando", /* Nome do avaliador */
-    fotoPerfil:"https://i.pinimg.com/236x/9f/1c/f1/9f1cf11f2e0749791b8cd24f4fee6937.jpg",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐⭐", /* Estrelinhas */
-    avaliacao:"Ótimo para segurar a porta, recomendo."
-},
-{
-    nome:"Motobunda",
-    preco:2499.90,
-    descricao:"Tela quebrada, usando um plástico de visor e bateria de longa duração(saiu da tomada paga).",
-    imagem:"https://http2.mlstatic.com/D_Q_NP_983786-MLA99479656582_112025-O.webp",
-    usuario:"Tomé Enstruando",
-    fotoPerfil:"https://i.pinimg.com/200x150/05/af/15/05af15ff9dcc9723c835d7ff1bdc6805.jpg",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐☆",
-    avaliacao:"Excelente celular para tacar no meu filho, duro igual uma pedra e esquenta igual lava, recomendo."
-},
-{
-    nome:"Headcut funcional",
-    preco:399.90,
-    descricao:"Som estourado, com lâminas em formatos estranhos.",
-    imagem:"https://m.media-amazon.com/images/I/61pvhJpLRRL._AC_UF894,1000_QL80_.jpg",
-    usuario:"Paulu Brificado",
-    fotoPerfil:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnd7voxN1SF8DEH5Rp61VviBSP2U9QmJUEMecQQwUv6w&s=10",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐⭐",
-    avaliacao:"Muito desconfortável e o áudio é horrívelmente bom para lubrificar"
-},
-{
-    nome:"Monitorta",
-    preco:1499.90,
-    descricao:"Monitor de responsa, é torto a 90°(partiu no meio), gerando uma visão pprevilegiada.",
-    imagem:"https://files.tecnoblog.net/wp-content/uploads/2023/07/lg-monitor-ultragear-curvo-1060x704.webp",
-    usuario:"Tommy Leite",
-    fotoPerfil:"https://i.pinimg.com/236x/bb/e7/7c/bbe77cfaab0951e2f783993fedc191b4.jpg",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐⭐",
-    avaliacao:"Perfeito para ver COISAS em ultra HD"
-}
-]; /* Fim da lista padrão */
-/* CHAVE única do localStorage — os DOIS arquivos (loja e admin) usam a MESMA
-   string. Isso é o que faz o admin e o cliente ficarem "em sintonia". */
-const CHAVE = "produtosLoja";
-/* Se ainda não existir nada salvo, gravamos a lista padrão.
-   Assim, a primeira visita já mostra produtos e o admin também os vê. */
-if(localStorage.getItem(CHAVE) === null){ /* Verifica se nunca foi salvo */
-    localStorage.setItem(CHAVE, JSON.stringify(produtosPadrao)); /* Grava padrão */
-}
-/* Função que LÊ os produtos do localStorage (fonte única da verdade). */
-function carregarProdutos(){
-    return JSON.parse(localStorage.getItem(CHAVE)) || []; /* Converte texto→array */
-}
-function comprar(){ /* Simula a compra */
-    alert("⚠️ ATENÇÃO: ESTOQUE ZERADO NO MOMENTO ⚠️ \n (Tomamos processo e fomos obrigados a parar de vender)");
-}
-function sair(){ /* Volta para a tela de login */
-    window.location.href = "login.html";
-}
-function listarProdutos(){ /* Renderiza todos os cards na tela */
-    let produtos = carregarProdutos(); /* Sempre pega a versão MAIS RECENTE */
-    let area = document.getElementById("produtos"); /* Container onde inserir */
-    area.innerHTML = ""; /* Limpa antes de redesenhar */
-    if(produtos.length === 0){ /* Se não há nenhum produto */
-        area.innerHTML = "<p style='text-align:center;color:white;font-size:20px;padding:40px;'>Nenhum produto disponível no momento.</p>";
-        return; /* Sai */
-    }
-    for(let i = 0; i < produtos.length; i++){ /* Loop em cada produto */
-       let p = produtos[i]; /* Atalho para o produto atual */
-       /* Alguns campos podem não existir (produto adicionado pelo admin
-          só tem nome e preço). Por isso usamos "||" para valores padrão. */
-       let imagem = p.imagem || "https://via.placeholder.com/180?text=Sem+Imagem";
-       let descricao = p.descricao || "Produto adicionado pelo satánas(Tá amarrado em nome de Jesus).";
-       let usuario = p.usuario || "Cliente Anônimo";
-       let fotoPerfil = p.fotoPerfil || "https://via.placeholder.com/55";
-       let pontuacao = p.pontuacaoAvaliacao || "⭐⭐⭐⭐⭐";
-       let avaliacao = p.avaliacao || "Ainda sem avaliações.";
-       area.innerHTML += ` 
-<div class="card"> <!-- Card do produto -->
-    <img src="${imagem}" alt="${p.nome}"> <!-- Imagem -->
-    <div class="info">
-        <h2>${p.nome}</h2> <!-- Nome -->
-        <p>${descricao}</p> <!-- Descrição -->
-        <p class="preco">R$ ${Number(p.preco).toFixed(2).replace(".",",")}</p> <!-- Preço -->
-        <button onclick="comprar()">Comprar</button> <!-- Botão comprar -->
-        <div class="card-avaliacao">
-            <div class="perfil">
-                <img src="${fotoPerfil}">
-                <div>
-                    <h4>${usuario}</h4>
-                    <div class="estrelas">${pontuacao}</div>
-                </div>
+    <div class="painel">
+        <div class="bloco">
+            <h2>➕ Adicionar Novo Item</h2>
+            <div class="linha">
+                <input type="text" id="nomeItem" placeholder="Nome do item *">
+                <input type="number" id="precoItem" placeholder="Preço (R$) *" step="0.01">
+                <input type="text" id="imagemItem" placeholder="URL da imagem (opcional)">
+                <input type="text" id="descricaoItem" placeholder="Descrição (opcional)">
+                <select id="pontuacaoItem">
+                    <option value="⭐">⭐ (1 estrela)</option>
+                    <option value="⭐⭐">⭐⭐ (2 estrelas)</option>
+                    <option value="⭐⭐⭐">⭐⭐⭐ (3 estrelas)</option>
+                    <option value="⭐⭐⭐⭐">⭐⭐⭐⭐ (4 estrelas)</option>
+                    <option value="⭐⭐⭐⭐⭐" selected>⭐⭐⭐⭐⭐ (5 estrelas)</option>
+                </select>
+                <button class="btn-add" onclick="adicionarItem()">Adicionar Produto</button>
             </div>
-            <p class="comentario">"${avaliacao}"</p>
+        </div>
+        
+        <div class="bloco">
+            <h2>🔍 Filtrar & Ações Globais</h2>
+            <div class="linha">
+                <input type="text" id="buscaItem" placeholder="Pesquisar produto pelo nome..." oninput="listarProdutos()">
+                <button class="btn-limpar" onclick="document.getElementById('buscaItem').value=''; listarProdutos();">Limpar Filtro</button>
+                <button class="btn-desfazer" id="btnDesfazer" onclick="desfazerRemocao()" style="display:none;">↺ Cancelar Última Remoção</button>
+                <button class="btn-restaurar" onclick="restaurarPadrao()">🔄 Restaurar Padrão de Fábrica</button>
+            </div>
         </div>
     </div>
-</div>`;
-    }
-}
-listarProdutos(); /* Chama assim que a página carrega */
-/* Escuta mudanças feitas em OUTRA aba (ex.: admin aberto em outra guia).
-   Sempre que o localStorage muda, redesenhamos a lista automaticamente. */
-window.addEventListener("storage", function(e){
-    if(e.key === CHAVE){ /* Só nos interessa a nossa chave */
-        listarProdutos(); /* Atualiza a tela */
-    }
-});
+</header>
 
-/* Carrega a lista atual do localStorage. Se ainda não existir, retorna array vazio. */
-let itens = JSON.parse(localStorage.getItem(CHAVE)) || [];
-/* Salva a lista atualizada de volta no localStorage. */
-function salvar(){
-    localStorage.setItem(CHAVE, JSON.stringify(itens)); /* Converte array→texto e grava */
+<div id="produtos"></div>
+
+<footer>
+    © 2026 Loja do Fritz - Painel do Administrador.
+</footer>
+
+<script>
+const CHAVE = "produtosLoja";
+
+let produtosPadrao = [
+    {
+        nome: "Notebomba",
+        preco: 5499.90,
+        descricao: "Notebomba ótimo para usar de peso para porta.",
+        imagem: "https://fastshopbr.vtexassets.com/arquivos/ids/4690488/17774671305318.jpg?v=639130677720670000",
+        usuario: "Tomas Turbando",
+        fotoPerfil: "https://i.pinimg.com/236x/9f/1c/f1/9f1cf11f2e0749791b8cd24f4fee6937.jpg",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐",
+        avaliacao: "Ótimo para segurar a porta, recomendo."
+    },
+    {
+        nome: "Motobunda",
+        preco: 2499.90,
+        descricao: "Tela quebrada, usando um plástico de visor e bateria de longa duração (saiu da tomada apaga).",
+        imagem: "https://http2.mlstatic.com/D_Q_NP_983786-MLA99479656582_112025-O.webp",
+        usuario: "Tomé Enstruando",
+        fotoPerfil: "https://i.pinimg.com/200x150/05/af/15/05af15ff9dcc9723c835d7ff1bdc6805.jpg",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐☆",
+        avaliacao: "Excelente celular para tacar no meu filho, duro igual uma pedra e esquenta igual lava."
+    },
+    {
+        nome: "Headcut funcional",
+        preco: 399.90,
+        descricao: "Som estourado, com lâminas em formatos estranhos.",
+        imagem: "https://m.media-amazon.com/images/I/61pvhJpLRRL._AC_UF894,1000_QL80_.jpg",
+        usuario: "Paulu Brificado",
+        fotoPerfil: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnd7voxN1SF8DEH5Rp61VviBSP2U9QmJUEMecQQwUv6w&s=10",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐",
+        avaliacao: "Muito desconfortável e o áudio é terrivelmente bom para lubrificar."
+    },
+    {
+        nome: "Monitorta",
+        preco: 1499.90,
+        descricao: "Monitor de responsa, é torto a 90° (partiu ao meio), gerando uma visão privilegiada.",
+        imagem: "https://files.tecnoblog.net/wp-content/uploads/2023/07/lg-monitor-ultragear-curvo-1060x704.webp",
+        usuario: "Tommy Leite",
+        fotoPerfil: "https://i.pinimg.com/236x/bb/e7/7c/bbe77cfaab0951e2f783993fedc191b4.jpg",
+        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐",
+        avaliacao: "Perfeito para ver COISAS em ultra HD."
+    }
+];
+
+let ultimoRemovido = null; // Guarda o último item excluído para poder desfazer
+
+if (localStorage.getItem(CHAVE) === null) {
+    localStorage.setItem(CHAVE, JSON.stringify(produtosPadrao));
 }
 
-/* Sai do painel e volta para a tela de login. */
-function sair(){
+function carregarProdutos() {
+    return JSON.parse(localStorage.getItem(CHAVE)) || [];
+}
+
+function salvar(itens) {
+    localStorage.setItem(CHAVE, JSON.stringify(itens));
+}
+
+function sair() {
     window.location.href = "login.html";
 }
 
-renderizar(); /* Chama ao abrir a página */
-/* Se algum outro admin (outra aba) alterar a lista, sincroniza aqui também. */
-window.addEventListener("storage", function(e){
-    if(e.key === CHAVE){ /* Só quando a chave certa mudar */
-        itens = JSON.parse(localStorage.getItem(CHAVE)) || []; /* Recarrega */
-        renderizar(); /* Redesenha */
+// RESTAURAR PRODUTOS INICIAIS
+function restaurarPadrao() {
+    if (confirm("Tem certeza que deseja restaurar o catálogo de produtos padrão de fábrica?")) {
+        salvar(produtosPadrao);
+        ultimoRemovido = null;
+        document.getElementById("btnDesfazer").style.display = "none";
+        listarProdutos();
+        alert("Catálogo padrão restaurado com sucesso!");
     }
-});
-function adicionarItem(){
-    let nome = document.getElementById("nomeItem").value.trim(); /* Nome sem espaços extras */
-    let preco = document.getElementById("precoItem").value; /* Preço digitado */
-    let imagem = document.getElementById("imagemItem").value.trim(); /* Imagem (opcional) */
-    let descricao = document.getElementById("descricaoItem").value.trim(); /* Descrição (opcional) */
-    let pontuacao = document.getElementById("pontuacao").value.trim();
-    if(nome==="" || preco===""){ /* Validação mínima */
-        alert("Preencha nome e preço.");
-        return; /* Não adiciona se faltar dado */
-    }
-    /* Monta o objeto do produto com os mesmos campos usados na loja do cliente. */
-    itens.push({
-        nome: nome, /* Nome do produto */
-        preco: parseFloat(preco), /* Converte string→número */
-        imagem: imagem, /* Pode ficar vazio; a loja usa placeholder */
-        descricao: descricao, /* Pode ficar vazio */
-        usuario: "Admin", /* Autor da avaliação padrão */
-        fotoPerfil: "", /* Sem foto */
-        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐", /* 5 estrelas padrão */
-        avaliacao: "Produto novo adicionado pelo administrador." /* Comentário padrão */
-    });
-    salvar(); /* Persiste no localStorage — cliente já enxerga na próxima abertura */
-    /* Limpa os campos para facilitar o próximo cadastro */
-    document.getElementById("nomeItem").value="";
-    document.getElementById("precoItem").value="";
-    document.getElementById("imagemItem").value="";
-    document.getElementById("descricaoItem").value="";
-    renderizar(); /* Atualiza a lista na tela do admin */
 }
-function renderizar(){
-    let busca = document.getElementById("buscaItem").value.toLowerCase(); /* Texto buscado */
-    let lista = document.getElementById("lista"); /* Container da lista */
-    lista.innerHTML = ""; /* Limpa antes de redesenhar */
-    /* Cria uma nova array só com o que combina com a busca,
-       mantendo o índice ORIGINAL para conseguir remover corretamente. */
-    let filtrados = itens
-        .map((item,i)=>({item,i})) /* Guarda item + índice original */
-        .filter(({item})=>item.nome.toLowerCase().includes(busca)); /* Filtra pelo nome */
-    if(filtrados.length===0){ /* Nada encontrado */
-        lista.innerHTML = '<p class="vazio">Nenhum item encontrado.</p>';
+
+// ADICIONAR ITEM
+function adicionarItem() {
+    let nome = document.getElementById("nomeItem").value.trim();
+    let preco = document.getElementById("precoItem").value;
+    let imagem = document.getElementById("imagemItem").value.trim();
+    let descricao = document.getElementById("descricaoItem").value.trim();
+    let pontuacao = document.getElementById("pontuacaoItem").value;
+
+    if (nome === "" || preco === "") {
+        alert("Preencha pelo menos o Nome e o Preço.");
         return;
     }
-    filtrados.forEach(({item,i})=>{ /* Para cada item filtrado */
-        let div = document.createElement("div"); /* Cria a div do item */
-        div.className = "item"; /* Aplica o estilo */
-        div.innerHTML = `
-            <div class="item-info">
-                <span class="item-nome">${item.nome}</span>
-                <span class="item-preco">R$ ${Number(item.preco).toFixed(2)}</span>
-            </div>
-            <button class="remover" onclick="removerItem(${i})">Remover</button>
-        `;
-        lista.appendChild(div); /* Adiciona no container */
+
+    let itens = carregarProdutos();
+    itens.push({
+        nome: nome,
+        preco: parseFloat(preco),
+        imagem: imagem || "https://via.placeholder.com/180?text=Sem+Imagem",
+        descricao: descricao || "Produto novo adicionado pelo exunte cadeirante.",
+        usuario: "desconhecido",
+        fotoPerfil: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100",
+        pontuacaoAvaliacao: pontuacao,
+        avaliacao: "Produto cadastrado e verificado pela equipe do exunte cadeirante."
     });
-}
-function removerItem(indice){
-    if(!confirm("Remover este item?")) return; /* Pede confirmação */
-    itens.splice(indice,1); /* Remove 1 elemento na posição "indice" */
-    salvar(); /* Grava a nova lista — cliente perde esse item */
-    renderizar(); /* Redesenha */
+
+    salvar(itens);
+
+    // Limpa os campos
+    document.getElementById("nomeItem").value = "";
+    document.getElementById("precoItem").value = "";
+    document.getElementById("imagemItem").value = "";
+    document.getElementById("descricaoItem").value = "";
+
+    listarProdutos();
 }
 
+// REMOVER ITEM
+function removerItem(indiceOriginal) {
+    let itens = carregarProdutos();
+    if (!confirm(`Remover o produto "${itens[indiceOriginal].nome}"?`)) return;
+
+    // Guarda item removido para permitir cancelar remoção
+    ultimoRemovido = {
+        item: itens[indiceOriginal],
+        posicao: indiceOriginal
+    };
+
+    itens.splice(indiceOriginal, 1);
+    salvar(itens);
+
+    // Exibe o botão de desfazer
+    document.getElementById("btnDesfazer").style.display = "inline-block";
+    listarProdutos();
+}
+
+// CANCELAR A ÚLTIMA REMOÇÃO (DESFAZER)
+function desfazerRemocao() {
+    if (!ultimoRemovido) return;
+
+    let itens = carregarProdutos();
+    itens.splice(ultimoRemovido.posicao, 0, ultimoRemovido.item);
+    salvar(itens);
+
+    ultimoRemovido = null;
+    document.getElementById("btnDesfazer").style.display = "none";
+    listarProdutos();
+    alert("Remoção cancelada! O produto voltou à loja.");
+}
+
+// LISTAR E FILTRAR OS CARDS VISUAIS DE FORMA COMPLETA
+function listarProdutos() {
+    let produtos = carregarProdutos();
+    let busca = document.getElementById("buscaItem").value.toLowerCase().trim();
+    let area = document.getElementById("produtos");
+    area.innerHTML = "";
+
+    if (produtos.length === 0) {
+        area.innerHTML = "<p style='text-align:center;color:white;font-size:20px;padding:40px;'>Nenhum produto cadastrado na loja.</p>";
+        return;
+    }
+
+    let encontrados = 0;
+
+    for (let i = 0; i < produtos.length; i++) {
+        let p = produtos[i];
+
+        // Se houver busca e o nome/descrição não corresponderem, esconde o produto
+        if (busca !== "" && !p.nome.toLowerCase().includes(busca) && !p.descricao.toLowerCase().includes(busca)) {
+            continue;
+        }
+
+        encontrados++;
+
+        let imagem = p.imagem || "https://via.placeholder.com/180?text=Sem+Imagem";
+        let descricao = p.descricao || "Sem descrição disponível.";
+        let usuario = p.usuario || "Cliente Anônimo";
+        let fotoPerfil = p.fotoPerfil || "https://via.placeholder.com/55";
+        let pontuacao = p.pontuacaoAvaliacao || "⭐⭐⭐⭐⭐";
+        let avaliacao = p.avaliacao || "Ainda sem comentários.";
+
+        area.innerHTML += `
+        <div class="card">
+            <img src="${imagem}" alt="${p.nome}">
+            <div class="info">
+                <h2>${p.nome}</h2>
+                <p>${descricao}</p>
+                <p class="preco">R$ ${Number(p.preco).toFixed(2).replace(".", ",")}</p>
+                
+                <button class="btn-excluir-card" onclick="removerItem(${i})">🗑️ Apagar Produto</button>
+
+                <div class="card-avaliacao">
+                    <div class="perfil">
+                        <img src="${fotoPerfil}">
+                        <div>
+                            <h4>${usuario}</h4>
+                            <div class="estrelas">${pontuacao}</div>
+                        </div>
+                    </div>
+                    <p class="comentario">"${avaliacao}"</p>
+                </div>
+            </div>
+        </div>
+        `;
+    }
+
+    if (encontrados === 0) {
+        area.innerHTML = `<p style='text-align:center;color:white;font-size:20px;padding:40px;'>Nenhum produto corresponde à pesquisa "${busca}".</p>`;
+    }
+}
+
+// Sincroniza abas abertas simultaneamente
+window.addEventListener("storage", function(e) {
+    if (e.key === CHAVE) {
+        listarProdutos();
+    }
+});
+
+listarProdutos();
 </script>
+
 </body>
 </html>
