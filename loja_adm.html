@@ -84,8 +84,37 @@ footer{
 <body>
 <button class="sair" onclick="sair()">🚪 Sair</button> <!-- Botão para voltar ao login -->
 <header>
-    <h1>🖥️ LOJA DO FRITZ</h1> <!-- Título da loja -->
+    <h1>🖥️ LOJA DO FRITZ - Setor Admnistrativo</h1> <!-- Título da loja -->
     <p>Os melhores eletrônicos com os melhores preços!</p> <!-- Slogan -->
+    <div class="painel"> <!-- Painel central -->
+    <div class="bloco"> <!-- Bloco: adicionar produto -->
+        <h2>➕ Adicionar item</h2>
+        <div class="linha">
+            <input type="text" id="nomeItem" placeholder="Nome do item"> <!-- Nome -->
+            <input type="number" id="precoItem" placeholder="Preço (R$)" step="0.01"> <!-- Preço -->
+            <input type="text" id="imagemItem" placeholder="URL da imagem (opcional)"> <!-- Imagem opcional -->
+            <input type="text" id="descricaoItem" placeholder="Descrição (opcional)"> <!-- Descrição opcional -->
+            <select> id ="pontuacaoAvaliacao"
+            <option value = ""> ⭐ </option>
+            <option value = ""> ⭐⭐ </option>
+            <option value = ""> ⭐⭐⭐</option>
+            <option value = ""> ⭐⭐⭐⭐ </option>
+            <option value = ""> ⭐⭐⭐⭐⭐ </option>
+            </select>
+
+            <button onclick="adicionarItem()">Adicionar</button> <!-- Botão adicionar -->
+        </div>
+    </div>
+    
+    <div class="bloco"> <!-- Bloco: buscar -->
+        <h2>🔍 Buscar item</h2>
+        <div class="linha">
+            <input type="text" id="buscaItem" placeholder="Digite o nome..." oninput="renderizar()"> <!-- Busca ao vivo -->
+            <button onclick="document.getElementById('buscaItem').value='';renderizar();">Limpar</button>
+        </div>
+    </div>
+    <div class="lista" id="lista"></div> <!-- Onde a lista é renderizada -->
+</div>
 </header>
 <div id="produtos"></div> <!-- Container onde os produtos serão inseridos via JS -->
 <footer>
@@ -114,11 +143,11 @@ let produtosPadrao = [ /* Lista inicial de produtos */
     imagem:"https://http2.mlstatic.com/D_Q_NP_983786-MLA99479656582_112025-O.webp",
     usuario:"Tomé Enstruando",
     fotoPerfil:"https://i.pinimg.com/200x150/05/af/15/05af15ff9dcc9723c835d7ff1bdc6805.jpg",
-    pontuacaoAvaliacao:"⭐⭐⭐⭐",
+    pontuacaoAvaliacao:"⭐⭐⭐⭐☆",
     avaliacao:"Excelente celular para tacar no meu filho, duro igual uma pedra e esquenta igual lava, recomendo."
 },
 {
-    nome:"Headcut",
+    nome:"Headcut funcional",
     preco:399.90,
     descricao:"Som estourado, com lâminas em formatos estranhos.",
     imagem:"https://m.media-amazon.com/images/I/61pvhJpLRRL._AC_UF894,1000_QL80_.jpg",
@@ -130,7 +159,7 @@ let produtosPadrao = [ /* Lista inicial de produtos */
 {
     nome:"Monitorta",
     preco:1499.90,
-    descricao:"Monitor de responsa, é torto a 90°(partiu no meio), gerando uma visão previlegiada.",
+    descricao:"Monitor de responsa, é torto a 90°(partiu no meio), gerando uma visão pprevilegiada.",
     imagem:"https://files.tecnoblog.net/wp-content/uploads/2023/07/lg-monitor-ultragear-curvo-1060x704.webp",
     usuario:"Tommy Leite",
     fotoPerfil:"https://i.pinimg.com/236x/bb/e7/7c/bbe77cfaab0951e2f783993fedc191b4.jpg",
@@ -169,7 +198,7 @@ function listarProdutos(){ /* Renderiza todos os cards na tela */
        /* Alguns campos podem não existir (produto adicionado pelo admin
           só tem nome e preço). Por isso usamos "||" para valores padrão. */
        let imagem = p.imagem || "https://via.placeholder.com/180?text=Sem+Imagem";
-       let descricao = p.descricao || "Produto adicionado pelo satánas(Tá amarrado).";
+       let descricao = p.descricao || "Produto adicionado pelo satánas(Tá amarrado em nome de Jesus).";
        let usuario = p.usuario || "Cliente Anônimo";
        let fotoPerfil = p.fotoPerfil || "https://via.placeholder.com/55";
        let pontuacao = p.pontuacaoAvaliacao || "⭐⭐⭐⭐⭐";
@@ -216,6 +245,7 @@ function salvar(){
 function sair(){
     window.location.href = "login.html";
 }
+
 renderizar(); /* Chama ao abrir a página */
 /* Se algum outro admin (outra aba) alterar a lista, sincroniza aqui também. */
 window.addEventListener("storage", function(e){
@@ -224,6 +254,67 @@ window.addEventListener("storage", function(e){
         renderizar(); /* Redesenha */
     }
 });
+function adicionarItem(){
+    let nome = document.getElementById("nomeItem").value.trim(); /* Nome sem espaços extras */
+    let preco = document.getElementById("precoItem").value; /* Preço digitado */
+    let imagem = document.getElementById("imagemItem").value.trim(); /* Imagem (opcional) */
+    let descricao = document.getElementById("descricaoItem").value.trim(); /* Descrição (opcional) */
+    let pontuacao = document.getElementById("pontuacao").value.trim();
+    if(nome==="" || preco===""){ /* Validação mínima */
+        alert("Preencha nome e preço.");
+        return; /* Não adiciona se faltar dado */
+    }
+    /* Monta o objeto do produto com os mesmos campos usados na loja do cliente. */
+    itens.push({
+        nome: nome, /* Nome do produto */
+        preco: parseFloat(preco), /* Converte string→número */
+        imagem: imagem, /* Pode ficar vazio; a loja usa placeholder */
+        descricao: descricao, /* Pode ficar vazio */
+        usuario: "Admin", /* Autor da avaliação padrão */
+        fotoPerfil: "", /* Sem foto */
+        pontuacaoAvaliacao: "⭐⭐⭐⭐⭐", /* 5 estrelas padrão */
+        avaliacao: "Produto novo adicionado pelo administrador." /* Comentário padrão */
+    });
+    salvar(); /* Persiste no localStorage — cliente já enxerga na próxima abertura */
+    /* Limpa os campos para facilitar o próximo cadastro */
+    document.getElementById("nomeItem").value="";
+    document.getElementById("precoItem").value="";
+    document.getElementById("imagemItem").value="";
+    document.getElementById("descricaoItem").value="";
+    renderizar(); /* Atualiza a lista na tela do admin */
+}
+function renderizar(){
+    let busca = document.getElementById("buscaItem").value.toLowerCase(); /* Texto buscado */
+    let lista = document.getElementById("lista"); /* Container da lista */
+    lista.innerHTML = ""; /* Limpa antes de redesenhar */
+    /* Cria uma nova array só com o que combina com a busca,
+       mantendo o índice ORIGINAL para conseguir remover corretamente. */
+    let filtrados = itens
+        .map((item,i)=>({item,i})) /* Guarda item + índice original */
+        .filter(({item})=>item.nome.toLowerCase().includes(busca)); /* Filtra pelo nome */
+    if(filtrados.length===0){ /* Nada encontrado */
+        lista.innerHTML = '<p class="vazio">Nenhum item encontrado.</p>';
+        return;
+    }
+    filtrados.forEach(({item,i})=>{ /* Para cada item filtrado */
+        let div = document.createElement("div"); /* Cria a div do item */
+        div.className = "item"; /* Aplica o estilo */
+        div.innerHTML = `
+            <div class="item-info">
+                <span class="item-nome">${item.nome}</span>
+                <span class="item-preco">R$ ${Number(item.preco).toFixed(2)}</span>
+            </div>
+            <button class="remover" onclick="removerItem(${i})">Remover</button>
+        `;
+        lista.appendChild(div); /* Adiciona no container */
+    });
+}
+function removerItem(indice){
+    if(!confirm("Remover este item?")) return; /* Pede confirmação */
+    itens.splice(indice,1); /* Remove 1 elemento na posição "indice" */
+    salvar(); /* Grava a nova lista — cliente perde esse item */
+    renderizar(); /* Redesenha */
+}
 
 </script>
 </body>
